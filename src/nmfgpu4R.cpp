@@ -1,7 +1,7 @@
 #include "Helper.h"
 #include "WrapperNMFGPU.h"
 
-#include <nmfgpu.h>
+#include "nmfgpu.h"
 #include <limits>
 #include <Rcpp.h>
 #include <string> 

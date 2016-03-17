@@ -49,9 +49,11 @@ NULL
 #}
 
 
-#' Test
+#' Requests the currently available and total amount of device memory.
+#' 
 #' @param device.index If specified the memory info retrieval is restricted to the passed device indices. By default no restriction is active and
 #' therefore memory information about all available CUDA devices are retrieved.
+#' 
 #' @export
 cudaMemoryInfo <- function(device.index=NA) {
   if(is.na(device.index)) {
@@ -71,15 +73,19 @@ cudaMemoryInfo <- function(device.index=NA) {
 }
 
 library(utils)
+
+#' Prints the information of a 'cudameminfo' object.
+#' @param x Object of class 'cudameminfo'
+#' @param ... Other arguments
 #' @export
-print.cudameminfo <- function(object) {
-  for(i in 1:length(object)) {
-    device.info <- object[[i]]
+print.cudameminfo <- function(x, ...) {
+  for(i in 1:length(x)) {
+    device.info <- x[[i]]
     
     # Try to format bytes
-    if(suppressMessages(require(gdata))) {
-      used <- humanReadable(device.info$total.bytes - device.info$free.bytes, digits=2)
-      total <- humanReadable(device.info$total.bytes, digits=2)
+    if(requireNamespace("gdata", quietly=T)) {
+      used <- gdata::humanReadable(device.info$total.bytes - device.info$free.bytes, digits=2)
+      total <- gdata::humanReadable(device.info$total.bytes, digits=2)
     } else {
       used <- paste(device.info$total.bytes - device.info$free.bytes, "B")
       total <- paste(device.info$total.bytes, "B")
@@ -90,11 +96,17 @@ print.cudameminfo <- function(object) {
   }
 }
 
+#' Retrieves the total number of installed CUDA devices. 
 #' @export
 gpuCount <- function() {
   return(getNumberOfGpu())
 }
 
+#' Selects the specified device as primary computation device. All further invocations to nmfgpu will use the specified
+#' CUDA device. 
+#' 
+#' @param device.index Index of the CUDA device, which should be used for computation.
+#'  
 #' @export
 chooseGpu <- function(device.index) {
   if(!is.numeric(device.index) || device.index %% 1 != 0 || device.index < 0) {

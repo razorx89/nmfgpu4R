@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include <nmfgpu.h>
+#include "nmfgpu.h"
 #include <string>
 
 extern void* g_libraryHandle;

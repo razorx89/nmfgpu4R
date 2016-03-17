@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <nmfgpu.h>
+#include "nmfgpu.h"
 #include <Rcpp.h>
 
 namespace Details {

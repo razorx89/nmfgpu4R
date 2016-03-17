@@ -40,6 +40,9 @@ nmfgpu <- function(...) {
 #'  the sparsity parameters \code{alphaH} and \code{alphaW} must be provided in the \code{parameters} argument. Both should
 #'  be set in the range of \code{0.0} and \code{1.0}, representing a percentage sparsity for each matrix. As recommended by
 #'  the authors all four parameters should be set to \code{0.5} as starting values.)}
+#'  \item{\strong{nsnmf}: Non-smooth Non-negative Matrix Factorization (nsNMF) presented by Pascual-Montano et al [6] is an
+#'  enhancement to the multiplicative update rules [2]. With an extra parameter \code{theta} the user has control over the 
+#'  influence of the model. The value should be in the range of \code{0.0} and \code{1.0} to work like intended.}
 #' }
 #' 
 #' @param initMethod All initialization methods depend on the selected algorithm. Using the fact that a least squares type 
@@ -95,6 +98,8 @@ nmfgpu <- function(...) {
 #' 
 #' @param verbose By default information about the factorization process and current status will be written to the console. For silent execution \code{verbose=T} may be passed, preventing any output besides error messages.
 #' 
+#' @param ssnmf Internal flag (Don't use it)
+#' 
 #' @param ... Other arguments
 #' 
 #' @return If the factorization process was successful, then a list of the following values will be returned otherwise NULL:
@@ -130,6 +135,7 @@ nmfgpu <- function(...) {
 #'  \item{V. P. Pauca, J. Piper, and R. J. Plemmons, "Nonnegative matrix factorization for spectral data analysis", Linear Algebra and its Applications, vol. 416, no. 1, pp. 29-47, 2006. Special Issue devoted to the Haifa 2005 conference on matrix theory.}
 #'  \item{A. N. Langville, C. D. Meyer, R. Albright, J. Cox, and D. Duling, "Algorithms, initializations, and convergence for the nonnegative matrix factorization", CoRR, vol. abs/1407.7299, 2014.}
 #'  \item{L. Gong and A. Nandi, "An enhanced initialization method for non-negative matrix factorization", in 2013 IEEE International Workshop on Machine Learning for Signal Processing (MLSP), pp. 1-6, Sept 2013.}
+#'  \item{A. Pascual-Montano, J. M. Carazo, K. Kochi, D. Lehmann and R. D. Pascual-Marqui "Nonsmooth nonnegative matrix factorization (nsNMF)", in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 28, pp. 403-415, 2006}
 #' }
 #' 
 #' @rdname nmfgpu
@@ -189,7 +195,8 @@ nmfgpu.default <- function(data, r, algorithm="mu", initMethod="AllRandomValues"
   return(result)
 }
 
-#' @param formula test
+#' @param formula Formula object with no intercept and labels for selected attributes. Note that die labels are 
+#' selected from the rows instead of the columns, because NMF expects rows to be attributes.
 #'
 #' @rdname nmfgpu
 #' @method nmfgpu formula
@@ -201,7 +208,7 @@ nmfgpu.formula <- function(formula, data, ...) {
   if(!is.null(result)) {
     result$call$labels <- labels
   }
-  return(results)
+  return(result)
 }
 
 #' @rdname nmfgpu

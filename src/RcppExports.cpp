@@ -5,36 +5,6 @@
 
 using namespace Rcpp;
 
-// adapterComputeKMeansSingle
-SEXP adapterComputeKMeansSingle(SEXP pData, unsigned k, unsigned seed, unsigned maxiter, double threshold);
-RcppExport SEXP nmfgpu4R_adapterComputeKMeansSingle(SEXP pDataSEXP, SEXP kSEXP, SEXP seedSEXP, SEXP maxiterSEXP, SEXP thresholdSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< SEXP >::type pData(pDataSEXP);
-    Rcpp::traits::input_parameter< unsigned >::type k(kSEXP);
-    Rcpp::traits::input_parameter< unsigned >::type seed(seedSEXP);
-    Rcpp::traits::input_parameter< unsigned >::type maxiter(maxiterSEXP);
-    Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
-    __result = Rcpp::wrap(adapterComputeKMeansSingle(pData, k, seed, maxiter, threshold));
-    return __result;
-END_RCPP
-}
-// adapterComputeKMeansDouble
-SEXP adapterComputeKMeansDouble(SEXP pData, unsigned k, unsigned seed, unsigned maxiter, double threshold);
-RcppExport SEXP nmfgpu4R_adapterComputeKMeansDouble(SEXP pDataSEXP, SEXP kSEXP, SEXP seedSEXP, SEXP maxiterSEXP, SEXP thresholdSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< SEXP >::type pData(pDataSEXP);
-    Rcpp::traits::input_parameter< unsigned >::type k(kSEXP);
-    Rcpp::traits::input_parameter< unsigned >::type seed(seedSEXP);
-    Rcpp::traits::input_parameter< unsigned >::type maxiter(maxiterSEXP);
-    Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
-    __result = Rcpp::wrap(adapterComputeKMeansDouble(pData, k, seed, maxiter, threshold));
-    return __result;
-END_RCPP
-}
 // initializeAdapters
 bool initializeAdapters(std::string nmfgpuRoot);
 RcppExport SEXP nmfgpu4R_initializeAdapters(SEXP nmfgpuRootSEXP) {
