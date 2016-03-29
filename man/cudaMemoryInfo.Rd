@@ -10,6 +10,14 @@ cudaMemoryInfo(device.index = NA)
 \item{device.index}{If specified the memory info retrieval is restricted to the passed device indices. By default no restriction is active and
 therefore memory information about all available CUDA devices are retrieved.}
 }
+\value{
+On success a list of lists will be returned, containing the following informations:
+\tabular{ll}{
+ \code{index} \tab Index of the CUDA device\cr
+ \code{free.bytes} \tab Amount of free memory in bytes. \cr
+ \code{total.bytes} \tab Total amount of memory in bytes.
+}
+}
 \description{
 Requests the currently available and total amount of device memory.
 }

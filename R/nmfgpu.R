@@ -1,3 +1,22 @@
+# nmfgpu4R - R binding for the nmfgpu library
+# 
+# Copyright (C) 2015-2016  Sven Koitka (svenkoitka@fh-dortmund.de)
+# 
+# This file is part of nmfgpu4R.
+# 
+# nmfgpu4R is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# nmfgpu4R is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with nmfgpu4R.  If not, see <http://www.gnu.org/licenses/>.
+
 #' @rdname nmfgpu
 #' @export
 nmfgpu <- function(...) {
@@ -11,7 +30,7 @@ nmfgpu <- function(...) {
 #' Multiple algorithms and initialization methods are implemented in the nmfgpu library using CUDA hardware acceleration.
 #' Depending on the available hardware, these algorithms should outperform traditional CPU implementations.
 #'
-#' @param data Data matrix of dimension n x m with n attributes and m entries.
+#' @param data Data matrix of dimension n x m with n attributes and m observations. Please note that this differs from most other data mining/machine learning algorithms!
 #' 
 #' @param r Factorization parameter, which affects the quality of the approximation and runtime.
 #' 
@@ -114,10 +133,6 @@ nmfgpu <- function(...) {
 #'  \code{SparsityH} \tab Sparsity of the factorized matrix H, where 0 is defined as a dense matrix and 1 as a empty matrix.
 #' }
 #' 
-#' @note
-#' Currently the K-Means algorithm implemention does not support randomizing the initial cluster centers. Therefore each 
-#' individual run of a K-Means initialization with the same data matrix \code{X} won't differ from each other.
-#' 
 #' @examples
 #' data <- runif(256*1024)
 #' dim(data) <- c(256, 1024)
@@ -127,6 +142,7 @@ nmfgpu <- function(...) {
 #' result <- nmfgpu(data, 128, algorithm="als", maxiter=500)
 #' result <- nmfgpu(data, 128, algorithm="acls", parameters=list(lambdaH=0.1, lambdaW=0.1), maxiter=500)
 #' result <- nmfgpu(data, 128, algorithm="ahcls", parameters=list(lambdaH=0.1, lambdaW=0.1, alphaH=0.5, alphaW=0.5), maxiter=500)
+#' result <- nmfgpu(data, 128, algorithm="nsnmf", parameters=list(theta=0.25), maxiter=500)
 #' 
 #' @references
 #' \enumerate{

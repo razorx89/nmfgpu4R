@@ -40,4 +40,3 @@ adapterComputeDoublePrecisionSparse <- function(algorithm, initMethod, sparseV, 
 adapterSetCallback <- function(func) {
     invisible(.Call('nmfgpu4R_adapterSetCallback', PACKAGE = 'nmfgpu4R', func))
 }
-

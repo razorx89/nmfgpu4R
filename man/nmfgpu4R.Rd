@@ -6,7 +6,7 @@
 \alias{nmfgpu4R-package}
 \title{R binding for computing non-negative matrix factorizations using CUDA}
 \description{
-R binding for the libary \emph{libnmfgpu} which can be used to compute non-negative matrix factorizations using CUDA hardware
+R binding for the libary \emph{nmfgpu} which can be used to compute Non-negative Matrix Factorizations (NMF) using CUDA hardware
 acceleration.
 }
 \details{

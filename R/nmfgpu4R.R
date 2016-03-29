@@ -1,6 +1,25 @@
+# nmfgpu4R - R binding for the nmfgpu library
+# 
+# Copyright (C) 2015-2016  Sven Koitka (svenkoitka@fh-dortmund.de)
+# 
+# This file is part of nmfgpu4R.
+# 
+# nmfgpu4R is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# nmfgpu4R is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with nmfgpu4R.  If not, see <http://www.gnu.org/licenses/>.
+
 #' R binding for computing non-negative matrix factorizations using CUDA
 #' 
-#' R binding for the libary \emph{libnmfgpu} which can be used to compute non-negative matrix factorizations using CUDA hardware
+#' R binding for the libary \emph{nmfgpu} which can be used to compute Non-negative Matrix Factorizations (NMF) using CUDA hardware
 #' acceleration. 
 #' 
 #' The main function to use is \code{\link{nmfgpu}} which can be configured using various arguments.
@@ -53,6 +72,13 @@ NULL
 #' 
 #' @param device.index If specified the memory info retrieval is restricted to the passed device indices. By default no restriction is active and
 #' therefore memory information about all available CUDA devices are retrieved.
+#' 
+#' @return On success a list of lists will be returned, containing the following informations:
+#' \tabular{ll}{
+#'  \code{index} \tab Index of the CUDA device\cr
+#'  \code{free.bytes} \tab Amount of free memory in bytes. \cr
+#'  \code{total.bytes} \tab Total amount of memory in bytes.
+#' }
 #' 
 #' @export
 cudaMemoryInfo <- function(device.index=NA) {

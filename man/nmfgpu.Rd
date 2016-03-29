@@ -28,7 +28,7 @@ nmfgpu(...)
 \arguments{
 \item{...}{Other arguments}
 
-\item{data}{Data matrix of dimension n x m with n attributes and m entries.}
+\item{data}{Data matrix of dimension n x m with n attributes and m observations. Please note that this differs from most other data mining/machine learning algorithms!}
 
 \item{r}{Factorization parameter, which affects the quality of the approximation and runtime.}
 
@@ -142,10 +142,6 @@ Computes the non-negative matrix factorization of a data matrix \code{X} using t
 Multiple algorithms and initialization methods are implemented in the nmfgpu library using CUDA hardware acceleration.
 Depending on the available hardware, these algorithms should outperform traditional CPU implementations.
 }
-\note{
-Currently the K-Means algorithm implemention does not support randomizing the initial cluster centers. Therefore each 
-individual run of a K-Means initialization with the same data matrix \code{X} won't differ from each other.
-}
 \examples{
 data <- runif(256*1024)
 dim(data) <- c(256, 1024)
@@ -155,6 +151,7 @@ result <- nmfgpu(data, 128, algorithm="gdcls", parameters=list(lambda=0.1), maxi
 result <- nmfgpu(data, 128, algorithm="als", maxiter=500)
 result <- nmfgpu(data, 128, algorithm="acls", parameters=list(lambdaH=0.1, lambdaW=0.1), maxiter=500)
 result <- nmfgpu(data, 128, algorithm="ahcls", parameters=list(lambdaH=0.1, lambdaW=0.1, alphaH=0.5, alphaW=0.5), maxiter=500)
+result <- nmfgpu(data, 128, algorithm="nsnmf", parameters=list(theta=0.25), maxiter=500)
 
 }
 \references{
