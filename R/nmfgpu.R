@@ -291,7 +291,7 @@ predict.nmfgpu <- function(object, newdata, ...) {
   result <- do.call(nmfgpu.default, args)
   
   if(!is.null(result)) {
-    return(t(result$H))
+    return(result$H)
   } else {
     return(NULL)
   }
