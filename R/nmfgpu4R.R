@@ -44,6 +44,8 @@ NULL
       nmfgpuRoot <- "/usr/local/nmfgpu"
     } else if(dir.exists("C:/Program Files/nmfgpu")) {
       nmfgpuRoot <- "C:/Program Files/nmfgpu"
+    } else {
+      nmfgpuRoot <- downloadLibrary()
     }
   }
   
