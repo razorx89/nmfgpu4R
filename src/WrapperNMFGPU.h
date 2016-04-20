@@ -41,3 +41,6 @@ extern std::function<nmfgpu::ResultType(unsigned,nmfgpu::GpuInformation*)>      
 
 bool initializeLibrary(std::string nmfgpuRoot);
 void finalizeLibrary();
+
+// [[Rcpp::export]]
+std::string getVersionString();

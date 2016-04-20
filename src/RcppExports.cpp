@@ -151,3 +151,13 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// getVersionString
+std::string getVersionString();
+RcppExport SEXP nmfgpu4R_getVersionString() {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    __result = Rcpp::wrap(getVersionString());
+    return __result;
+END_RCPP
+}

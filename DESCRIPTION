@@ -2,7 +2,7 @@ Package: nmfgpu4R
 Type: Package
 Title: Non-negative Matrix Factorization (NMF) using CUDA
 Version: 0.2.4
-Date: 2016-02-27
+Date: 2016-04-18
 Author: Sven Koitka [aut, cre, cph],
     Christoph M. Friedrich [ctb]
 Maintainer: Sven Koitka <svenkoitka@stud.fh-dortmund.de>
@@ -11,15 +11,17 @@ Description: Wrapper package for the nmfgpu library, which implements several
     By using the acceleration of GPGPU computing, the NMF can be used for
     real-world problems inside the R environment. All CUDA devices starting with
     Kepler architecture are supported by the library.
-License: GPL-3
+License: GPL-3 | file LICENSE
 URL: https://github.com/razorx89/nmfgpu4R
 BugReports: https://github.com/razorx89/nmfgpu4R/issues
 Depends:
     R (>= 3.1.0)
 Imports:
+    Rcpp (>= 0.11.4),
     Matrix,
     SparseM,
-    Rcpp (>= 0.11.4)
+	tools,
+	utils
 Suggests:
     gdata
 LinkingTo: Rcpp

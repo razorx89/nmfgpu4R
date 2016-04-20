@@ -4,7 +4,7 @@
 \alias{print.cudameminfo}
 \title{Prints the information of a 'cudameminfo' object.}
 \usage{
-print.cudameminfo(x, ...)
+\method{print}{cudameminfo}(x, ...)
 }
 \arguments{
 \item{x}{Object of class 'cudameminfo'}

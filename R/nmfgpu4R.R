@@ -33,26 +33,102 @@ NULL
 
 # Loads the C++ library when the package is loaded 
 .onLoad <- function(lib, pkg) {
+  if(.Machine$sizeof.pointer != 8) {
+    stop("nmfgpu4R is only compatible with 64-bit versions of R")
+  }
+  
   nmfgpuRoot <- Sys.getenv("NMFGPU_ROOT")
+  
   if(nmfgpuRoot == "") {
     if(dir.exists("/usr/local/nmfgpu")) {
       nmfgpuRoot <- "/usr/local/nmfgpu"
     } else if(dir.exists("C:/Program Files/nmfgpu")) {
       nmfgpuRoot <- "C:/Program Files/nmfgpu"
     }
-    stop("[ERROR] Environment variable NMFGPU_ROOT not set!")
   }
+  
+  errmsg <- NULL
   if(!dir.exists(nmfgpuRoot)) {
-    stop("[ERROR] Environment variable NMFGPU_ROOT points to '", nmfgpuRoot, "' which is not a valid and/or existing directory!")
+    errmsg <- paste0("[ERROR] Environment variable NMFGPU_ROOT points to '", nmfgpuRoot, "' which is not a valid and/or existing directory!")
   }
-  if(!initializeAdapters(nmfgpuRoot)) {
-    stop("[ERROR] Initialization failed!");
+  
+  if(is.null(errmsg) && !initializeAdapters(nmfgpuRoot)) {
+    errmsg <- "[ERROR] Initialization failed!"
+  }
+  
+  if(exists("errmsg") && !is.null(errmsg)) {
+    stop(errmsg, " Have you installed 'nmfgpu' according to the installation instructions on 'https://github.com/razorx89/nmfgpu'?")
   }
 }
 
 # Unloads the C++ library when the package is unloaded
 .onUnload <- function(lib, pkg) {
   shutdownAdapters()
+}
+
+getOperatingSystemIdentifier <- function() {
+  if(.Platform$OS.type == "windows") { 
+    "win"
+  } else if(Sys.info()["sysname"] == "Darwin") {
+    "mac" 
+  } else if(.Platform$OS.type == "unix") { 
+    "unix"
+  } else {
+    stop("Unknown OS")
+  }
+}
+
+downloadLibrary <- function() {
+  # Generate URLs
+  os <- getOperatingSystemIdentifier()
+  ver <- getVersionString()
+  libURL <- paste0("https://github.com/razorx89/nmfgpu/releases/download/", ver, "/nmfgpu-", os, ".zip")
+  md5URL <- paste0(libURL, ".md5")
+  
+  # Generate filesystem paths
+  pkgPath <- dirname(system.file(".", package = "nmfgpu4R"))
+  installDir <- file.path(pkgPath, "inst", paste0("nmfgpu-", ver))
+  tmpArchive <- tempfile(fileext = ".zip")
+  tmpMD5 <- tempfile(fileext = ".md5")
+  
+  # Check if directory exists
+  if(dir.exists(installDir) && length(list.files(installDir, all.files=T, include.dirs=T, no..=T)) > 0) {
+    return(installDir)
+  } else {
+    dir.create(path = installDir, showWarnings = F)
+  }
+  
+  # Download from github
+  cat("Performing one-time downloading of library 'nmfgpu' from '", libURL, "'...")
+  utils::download.file(url = libURL, destfile = tmpArchive, mode = "wb", cacheOK = F, quiet = T)
+  if(file.exists(tmpArchive)) {
+    cat(" [DONE]\n")
+  } else {
+    cat(" [FAILED]\n")
+    stop("[ERROR] Failed to download 'nmfgpu' library from github! Please try to download '", libURL, "' or compile the library from source.")
+  }
+  
+  cat("Verifying integrity of archive file...")
+  utils::download.file(url = md5URL, destfile = tmpMD5, mode = "w", cacheOK = F, quiet = T)
+  if(file.exists(tmpMD5)) {
+    md5Check <- tolower(readLines(tmpMD5, n=1))
+    md5Tmp <- tolower(as.character(tools::md5sum(tmpArchive)))
+    
+    if(md5Check != md5Tmp) {
+      cat(" [FAILED]\n")
+      stop("[ERROR] Could not verify archive download, MD5 hashes do not match!")
+    } else {
+      cat(" [DONE]\n")
+    }
+  } else {
+    cat("[FAILED]\n")
+    stop("[ERROR] Failed to download MD5 checksum for library archive!")
+  }
+  
+  # Extract archive
+  unzip(tmpArchive, exdir=installDir)
+  
+  return(installDir)
 }
 
 # Sets a callback which gets called when a new frobenius norm has been calculated. Information like iteration number, frobenius norm, 
@@ -103,7 +179,9 @@ library(utils)
 #' Prints the information of a 'cudameminfo' object.
 #' @param x Object of class 'cudameminfo'
 #' @param ... Other arguments
+#' 
 #' @export
+#' @method print cudameminfo
 print.cudameminfo <- function(x, ...) {
   for(i in 1:length(x)) {
     device.info <- x[[i]]

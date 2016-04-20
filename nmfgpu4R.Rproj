@@ -16,5 +16,5 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source --fake
 PackageBuildBinaryArgs: --no-multiarch
-PackageCheckArgs: --no-multiarch --install=fake
+PackageCheckArgs: --no-multiarch --install=fake --as-cran
 PackageRoxygenize: rd,collate,namespace

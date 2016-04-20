@@ -27,6 +27,7 @@ along with nmfgpu4R.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 #include <fstream>
 #include <Rcpp.h>
+#include <string>
 #include "WrapperNMFGPU.h"
 
 namespace Details {
@@ -193,4 +194,11 @@ void finalizeLibrary() {
   g_funcChooseGpu = nullptr;
   g_funcGetNumberOfGpu = nullptr;
   g_funcGetInfoForGpuIndex = nullptr;
+}
+
+#define xstr(s) str(s)
+#define str(s) #s
+
+std::string getVersionString() {
+  return "v" xstr(NMFGPU_MAJOR) "." xstr(NMFGPU_MINOR) "." xstr(NMFGPU_PATCH);
 }

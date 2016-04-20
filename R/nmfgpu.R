@@ -137,12 +137,15 @@ nmfgpu <- function(...) {
 #' data <- runif(256*1024)
 #' dim(data) <- c(256, 1024)
 #' result <- nmfgpu(data, 128, algorithm="mu", initMethod="K-Means/Random", maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="mu", initMethod="CopyExisting", parameters=list(W=result$W, H=result$H), maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="gdcls", parameters=list(lambda=0.1), maxiter=500)
+#' result <- nmfgpu(data, 128, algorithm="mu", initMethod="CopyExisting", 
+#'                  parameters=list(W=result$W, H=result$H), maxiter=500)
+#' result <- nmfgpu(data, 128, algorithm="gdcls", maxiter=500, parameters=list(lambda=0.1))
 #' result <- nmfgpu(data, 128, algorithm="als", maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="acls", parameters=list(lambdaH=0.1, lambdaW=0.1), maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="ahcls", parameters=list(lambdaH=0.1, lambdaW=0.1, alphaH=0.5, alphaW=0.5), maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="nsnmf", parameters=list(theta=0.25), maxiter=500)
+#' result <- nmfgpu(data, 128, algorithm="acls", maxiter=500, 
+#'                  parameters=list(lambdaH=0.1, lambdaW=0.1))
+#' result <- nmfgpu(data, 128, algorithm="ahcls", maxiter=500, 
+#'                  parameters=list(lambdaH=0.1, lambdaW=0.1, alphaH=0.5, alphaW=0.5))
+#' result <- nmfgpu(data, 128, algorithm="nsnmf", maxiter=500, parameters=list(theta=0.25))
 #' 
 #' @references
 #' \enumerate{
@@ -192,7 +195,7 @@ nmfgpu.default <- function(data, r, algorithm="mu", initMethod="AllRandomValues"
   }
   
   if(!is.null(result)) {
-    # Copy row and column names from data matrix and generate new names für basis vectors
+    # Copy row and column names from data matrix and generate new names for basis vectors
     rownames(result$W) <- rownames(data)
     colnames(result$W) <- paste("r", 1:r, sep="")
     rownames(result$H) <- colnames(result$W)
