@@ -5,7 +5,7 @@ Version: 0.2.4
 Date: 2016-04-18
 Author: Sven Koitka [aut, cre, cph],
     Christoph M. Friedrich [ctb]
-Maintainer: Sven Koitka <svenkoitka@stud.fh-dortmund.de>
+Maintainer: Sven Koitka <sven.koitka@fh-dortmund.de>
 Description: Wrapper package for the nmfgpu library, which implements several
     Non-negative Matrix Factorization (NMF) algorithms for CUDA platforms.
     By using the acceleration of GPGPU computing, the NMF can be used for
