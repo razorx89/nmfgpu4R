@@ -2,8 +2,8 @@
 R binding for the [nmfgpu](https://github.com/razorx89/nmfgpu) library
 
 ## About
-This package is a binding of the nmfgpu library for the R language. By default the package installs the relevant release of nmfgpu from github into the package directory. 
-If you want to use a custom compiled version, then define the `NMFGPU_ROOT` environment variable. Please visit the [nmfgpu](https://github.com/razorx89/nmfgpu) project page 
+This package is a binding of the nmfgpu library for the R language. By default the package installs the relevant release of nmfgpu from github into the package directory.
+If you want to use a custom compiled version, then define the `NMFGPU_ROOT` environment variable. Please visit the [nmfgpu](https://github.com/razorx89/nmfgpu) project page
 or read the package documentation for further information.
 
 ## Citation
@@ -34,6 +34,7 @@ install_github("razorx89/nmfgpu4R")
 ```
 
 ### Known issues
+- Currently `nmfgpu` is only prebuild for Windows and Linux using the CUDA 7.5 toolkit. If you are using Mac OS X or CUDA 7.0 then you have to compile `nmfgpu` according to the installation instructions.
 - Installation/Loading of the package fails if the nmfgpu library cannot be loaded
   - Do you have created a `NMFGPU_ROOT` environment variable?
   - Do you have all required dependencies installed? (CUDA, Visual Studio Runtime on Windows platforms, ...)

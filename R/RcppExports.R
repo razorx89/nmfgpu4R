@@ -9,16 +9,16 @@ shutdownAdapters <- function() {
     invisible(.Call('nmfgpu4R_shutdownAdapters', PACKAGE = 'nmfgpu4R'))
 }
 
-chooseGpuImpl <- function(index) {
-    .Call('nmfgpu4R_chooseGpuImpl', PACKAGE = 'nmfgpu4R', index)
+cppChooseGpu <- function(index) {
+    .Call('nmfgpu4R_cppChooseGpu', PACKAGE = 'nmfgpu4R', index)
 }
 
-getNumberOfGpu <- function() {
-    .Call('nmfgpu4R_getNumberOfGpu', PACKAGE = 'nmfgpu4R')
+cppNumberOfGpu <- function() {
+    .Call('nmfgpu4R_cppNumberOfGpu', PACKAGE = 'nmfgpu4R')
 }
 
-getInfoForGpuIndex <- function(index) {
-    .Call('nmfgpu4R_getInfoForGpuIndex', PACKAGE = 'nmfgpu4R', index)
+cppInfoForGpuIndex <- function(index) {
+    .Call('nmfgpu4R_cppInfoForGpuIndex', PACKAGE = 'nmfgpu4R', index)
 }
 
 adapterComputeSinglePrecision <- function(algorithm, initMethod, V, features, seed, threshold, maxiter, runs, parameters, verbose, ssnmf) {
@@ -41,7 +41,7 @@ adapterSetCallback <- function(func) {
     invisible(.Call('nmfgpu4R_adapterSetCallback', PACKAGE = 'nmfgpu4R', func))
 }
 
-getVersionString <- function() {
-    .Call('nmfgpu4R_getVersionString', PACKAGE = 'nmfgpu4R')
+nmfgpuVersionString <- function() {
+    .Call('nmfgpu4R_nmfgpuVersionString', PACKAGE = 'nmfgpu4R')
 }
 

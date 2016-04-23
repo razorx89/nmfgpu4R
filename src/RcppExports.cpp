@@ -25,35 +25,35 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// chooseGpuImpl
-bool chooseGpuImpl(int index);
-RcppExport SEXP nmfgpu4R_chooseGpuImpl(SEXP indexSEXP) {
+// cppChooseGpu
+bool cppChooseGpu(int index);
+RcppExport SEXP nmfgpu4R_cppChooseGpu(SEXP indexSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< int >::type index(indexSEXP);
-    __result = Rcpp::wrap(chooseGpuImpl(index));
+    __result = Rcpp::wrap(cppChooseGpu(index));
     return __result;
 END_RCPP
 }
-// getNumberOfGpu
-unsigned getNumberOfGpu();
-RcppExport SEXP nmfgpu4R_getNumberOfGpu() {
+// cppNumberOfGpu
+unsigned cppNumberOfGpu();
+RcppExport SEXP nmfgpu4R_cppNumberOfGpu() {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    __result = Rcpp::wrap(getNumberOfGpu());
+    __result = Rcpp::wrap(cppNumberOfGpu());
     return __result;
 END_RCPP
 }
-// getInfoForGpuIndex
-Rcpp::List getInfoForGpuIndex(unsigned index);
-RcppExport SEXP nmfgpu4R_getInfoForGpuIndex(SEXP indexSEXP) {
+// cppInfoForGpuIndex
+Rcpp::List cppInfoForGpuIndex(unsigned index);
+RcppExport SEXP nmfgpu4R_cppInfoForGpuIndex(SEXP indexSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< unsigned >::type index(indexSEXP);
-    __result = Rcpp::wrap(getInfoForGpuIndex(index));
+    __result = Rcpp::wrap(cppInfoForGpuIndex(index));
     return __result;
 END_RCPP
 }
@@ -151,13 +151,13 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// getVersionString
-std::string getVersionString();
-RcppExport SEXP nmfgpu4R_getVersionString() {
+// nmfgpuVersionString
+std::string nmfgpuVersionString();
+RcppExport SEXP nmfgpu4R_nmfgpuVersionString() {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    __result = Rcpp::wrap(getVersionString());
+    __result = Rcpp::wrap(nmfgpuVersionString());
     return __result;
 END_RCPP
 }

@@ -47,17 +47,17 @@ void shutdownAdapters() {
 }
 
 // [[Rcpp::export]]
-bool chooseGpuImpl(int index) {
+bool cppChooseGpu(int index) {
   return g_funcChooseGpu(static_cast<unsigned>(index)) == nmfgpu::ResultType::Success;
 }
 
 // [[Rcpp::export]]
-unsigned getNumberOfGpu() {
+unsigned cppNumberOfGpu() {
   return g_funcGetNumberOfGpu();
 }
 
 // [[Rcpp::export]]
-Rcpp::List getInfoForGpuIndex(unsigned index) {
+Rcpp::List cppInfoForGpuIndex(unsigned index) {
   auto result = Rcpp::List::create();
   
   nmfgpu::GpuInformation info;
@@ -186,8 +186,6 @@ bool executeAlgorithm(Rcpp::List& result, const std::string& algorithm, nmfgpu::
   result["Frobenius"] = statistic.frobenius;
   result["RMSD"] = statistic.rmsd;
   result["ElapsedTime"] = statistic.elapsedTime;
-  result["SparsityW"] = statistic.sparsityW;
-  result["SparsityH"] = statistic.sparsityH;
   result["NumIterations"] = statistic.numIterations;
   
   summary->destroy();

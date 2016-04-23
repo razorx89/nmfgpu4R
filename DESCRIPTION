@@ -2,7 +2,7 @@ Package: nmfgpu4R
 Type: Package
 Title: Non-negative Matrix Factorization (NMF) using CUDA
 Version: 0.2.4
-Date: 2016-04-18
+Date: 2016-04-23
 Author: Sven Koitka [aut, cre, cph],
     Christoph M. Friedrich [ctb]
 Maintainer: Sven Koitka <sven.koitka@fh-dortmund.de>
@@ -20,8 +20,9 @@ Imports:
     Rcpp (>= 0.11.4),
     Matrix,
     SparseM,
-	tools,
-	utils
+    stringr,
+	  tools,
+	  utils
 Suggests:
     gdata
 LinkingTo: Rcpp

@@ -199,6 +199,6 @@ void finalizeLibrary() {
 #define xstr(s) str(s)
 #define str(s) #s
 
-std::string getVersionString() {
+std::string nmfgpuVersionString() {
   return "v" xstr(NMFGPU_MAJOR) "." xstr(NMFGPU_MINOR) "." xstr(NMFGPU_PATCH);
 }

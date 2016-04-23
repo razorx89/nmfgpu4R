@@ -43,4 +43,4 @@ bool initializeLibrary(std::string nmfgpuRoot);
 void finalizeLibrary();
 
 // [[Rcpp::export]]
-std::string getVersionString();
+std::string nmfgpuVersionString();

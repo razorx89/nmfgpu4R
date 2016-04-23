@@ -17,10 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with nmfgpu4R.  If not, see <http://www.gnu.org/licenses/>.
 
-#' @rdname nmfgpu
+#' @rdname nmf
 #' @export
-nmfgpu <- function(...) {
-  UseMethod("nmfgpu")
+nmf <- function(...) {
+  .ensureInitialized()
+  
+  UseMethod("nmf")
 }
 
 
@@ -129,23 +131,23 @@ nmfgpu <- function(...) {
 #'  \code{RMSD} \tab Contains the root-mean-square deviation (RMSD) of the factorization at the end of algorithm execution.\cr
 #'  \code{ElapsedTime} \tab Contains the elapsed time for initialization and algorithm execution.\cr
 #'  \code{NumIterations} \tab Number of iterations until the algorithm had converged.\cr
-#'  \code{SparsityW} \tab Sparsity of the factorized matrix W, where 0 is defined as a dense matrix and 1 as a empty matrix.\cr
-#'  \code{SparsityH} \tab Sparsity of the factorized matrix H, where 0 is defined as a dense matrix and 1 as a empty matrix.
 #' }
 #' 
 #' @examples
+#' \dontrun{
 #' data <- runif(256*1024)
 #' dim(data) <- c(256, 1024)
-#' result <- nmfgpu(data, 128, algorithm="mu", initMethod="K-Means/Random", maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="mu", initMethod="CopyExisting", 
+#' result <- nmf(data, 128, algorithm="mu", initMethod="K-Means/Random", maxiter=500)
+#' result <- nmf(data, 128, algorithm="mu", initMethod="CopyExisting", 
 #'                  parameters=list(W=result$W, H=result$H), maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="gdcls", maxiter=500, parameters=list(lambda=0.1))
-#' result <- nmfgpu(data, 128, algorithm="als", maxiter=500)
-#' result <- nmfgpu(data, 128, algorithm="acls", maxiter=500, 
+#' result <- nmf(data, 128, algorithm="gdcls", maxiter=500, parameters=list(lambda=0.1))
+#' result <- nmf(data, 128, algorithm="als", maxiter=500)
+#' result <- nmf(data, 128, algorithm="acls", maxiter=500, 
 #'                  parameters=list(lambdaH=0.1, lambdaW=0.1))
-#' result <- nmfgpu(data, 128, algorithm="ahcls", maxiter=500, 
+#' result <- nmf(data, 128, algorithm="ahcls", maxiter=500, 
 #'                  parameters=list(lambdaH=0.1, lambdaW=0.1, alphaH=0.5, alphaW=0.5))
-#' result <- nmfgpu(data, 128, algorithm="nsnmf", maxiter=500, parameters=list(theta=0.25))
+#' result <- nmf(data, 128, algorithm="nsnmf", maxiter=500, parameters=list(theta=0.25))
+#' }
 #' 
 #' @references
 #' \enumerate{
@@ -157,10 +159,10 @@ nmfgpu <- function(...) {
 #'  \item{A. Pascual-Montano, J. M. Carazo, K. Kochi, D. Lehmann and R. D. Pascual-Marqui "Nonsmooth nonnegative matrix factorization (nsNMF)", in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 28, pp. 403-415, 2006}
 #' }
 #' 
-#' @rdname nmfgpu
-#' @method nmfgpu default
+#' @rdname nmf
+#' @method nmf default
 #' @export
-nmfgpu.default <- function(data, r, algorithm="mu", initMethod="AllRandomValues", seed=floor(runif(1, 0, .Machine$integer.max)), threshold=0.1, maxiter=2000, runs=1, parameters=NULL, useSinglePrecision=F, verbose=T, ssnmf=F, ...) {
+nmf.default <- function(data, r, algorithm="mu", initMethod="AllRandomValues", seed=floor(runif(1, 0, .Machine$integer.max)), threshold=0.1, maxiter=2000, runs=1, parameters=NULL, useSinglePrecision=F, verbose=T, ssnmf=F, ...) {
   if(r > dim(data)[2] && !ssnmf) {
     stop("Factorization parameter r must be less or equal the number of columns of the data matrix!")
   }
@@ -217,27 +219,27 @@ nmfgpu.default <- function(data, r, algorithm="mu", initMethod="AllRandomValues"
 #' @param formula Formula object with no intercept and labels for selected attributes. Note that die labels are 
 #' selected from the rows instead of the columns, because NMF expects rows to be attributes.
 #'
-#' @rdname nmfgpu
-#' @method nmfgpu formula
+#' @rdname nmf
+#' @method nmf formula
 #' @export
-nmfgpu.formula <- function(formula, data, ...) { 
+nmf.formula <- function(formula, data, ...) { 
   labels <- validateFormulaAndGetLabels(formula, data)
   
-  result <- nmfgpu.default(data[labels,], ...)
+  result <- nmf.default(data[labels,], ...)
   if(!is.null(result)) {
     result$call$labels <- labels
   }
   return(result)
 }
 
-#' @rdname nmfgpu
-#' @method residuals nmfgpu
-#' @export
-residuals.nmfgpu <- function(object, ...) {
-  return(object$Frobenius)
-}
+# @rdname nmf
+# @method residuals nmfgpu
+# @export
+#residuals.nmfgpu <- function(object, ...) {
+#  return(object$Frobenius)
+#}
 
-#' @rdname nmfgpu
+#' @rdname nmf
 #' @method fitted nmfgpu
 #' @export
 fitted.nmfgpu <- function(object, ...) {
@@ -247,10 +249,12 @@ fitted.nmfgpu <- function(object, ...) {
 #' @param object Object of class "\code{nmfgpu}"
 #' @param newdata New data matrix compatible to the training data matrix, for computing the corresponding mixing matrix.
 #' 
-#' @rdname nmfgpu
+#' @rdname nmf
 #' @method predict nmfgpu
 #' @export
 predict.nmfgpu <- function(object, newdata, ...) {
+  .ensureInitialized()
+  
   # If no new data is provided then return the encoding matrix of the training data
   if(missing(newdata)) {
     return(object$H)
@@ -291,7 +295,7 @@ predict.nmfgpu <- function(object, newdata, ...) {
   args$runs <- 1 # Encoding with fixed basis vectors is a convex optimization!
   args$ssnmf <- T
   
-  result <- do.call(nmfgpu.default, args)
+  result <- do.call(nmf.default, args)
   
   if(!is.null(result)) {
     return(result$H)

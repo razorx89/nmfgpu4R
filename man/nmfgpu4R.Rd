@@ -10,7 +10,7 @@ R binding for the libary \emph{nmfgpu} which can be used to compute Non-negative
 acceleration.
 }
 \details{
-The main function to use is \code{\link{nmfgpu}} which can be configured using various arguments.
-In addition to it a few helper functions are provided, but they aren't necessary for using \code{\link{nmfgpu}}.
+The main function to use is \code{\link{nmf}} which can be configured using various arguments.
+In addition to it a few helper functions are provided, but they aren't necessary for using \code{\link{nmf}}.
 }
 
