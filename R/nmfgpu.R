@@ -135,8 +135,15 @@ nmf <- function(...) {
 #' 
 #' @examples
 #' \dontrun{
+#' # Initialize the library
+#' library(nmfgpu4R)
+#' nmfgpu4R.init()
+#' 
+#' # Create dummy data
 #' data <- runif(256*1024)
 #' dim(data) <- c(256, 1024)
+#' 
+#' # Compute several factorization models
 #' result <- nmf(data, 128, algorithm="mu", initMethod="K-Means/Random", maxiter=500)
 #' result <- nmf(data, 128, algorithm="mu", initMethod="CopyExisting", 
 #'                  parameters=list(W=result$W, H=result$H), maxiter=500)
@@ -147,6 +154,19 @@ nmf <- function(...) {
 #' result <- nmf(data, 128, algorithm="ahcls", maxiter=500, 
 #'                  parameters=list(lambdaH=0.1, lambdaW=0.1, alphaH=0.5, alphaW=0.5))
 #' result <- nmf(data, 128, algorithm="nsnmf", maxiter=500, parameters=list(theta=0.25))
+#' 
+#' # Compute encoding matrices for training and test data
+#' set.seed(42)
+#' idx <- sample(1:nrow(iris), 100, replace=F)
+#' data.train <- iris[idx,]
+#' data.test <- iris[-idx,]
+#' 
+#' model.nmf <- nmf(t(data.train[,-5]), 2)
+#' encoding.train <- t(predict(model.nmf))
+#' encoding.test <- t(predict(model.nmf, t(data.test[,-5])))
+#' 
+#' plot(encoding.train, col=data.train[,5], pch=1)
+#' points(encoding.test, col=data.test[,5], pch=4)
 #' }
 #' 
 #' @references

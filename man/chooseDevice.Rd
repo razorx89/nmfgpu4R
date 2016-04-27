@@ -5,10 +5,10 @@
 \title{Selects the specified device as primary computation device. All further invocations to nmfgpu will use the specified
 CUDA device.}
 \usage{
-chooseDevice(deviceInfo)
+chooseDevice(deviceIndex)
 }
 \arguments{
-\item{device.index}{Index of the CUDA device, which should be used for computation.}
+\item{deviceIndex}{Index of the CUDA device, which should be used for computation.}
 }
 \description{
 Selects the specified device as primary computation device. All further invocations to nmfgpu will use the specified

@@ -29,6 +29,9 @@
 #' @name nmfgpu4R
 #' @useDynLib nmfgpu4R
 #' @import Rcpp
+#' @import Matrix
+#' @importFrom stats runif terms
+#' @importFrom utils txtProgressBar unzip
 NULL
 
 nmfgpu4R.env <- new.env()
@@ -233,7 +236,7 @@ nmfgpu4R.init <- function(quiet=F) {
 
 #' Requests the currently available and total amount of device memory.
 #' 
-#' @param device.index If specified the memory info retrieval is restricted to the passed device indices. By default no restriction is active and
+#' @param deviceIndex If specified the memory info retrieval is restricted to the passed device indices. By default no restriction is active and
 #' therefore memory information about all available CUDA devices are retrieved.
 #' 
 #' @return On success a list of lists will be returned, containing the following informations:
@@ -299,19 +302,19 @@ deviceCount <- function() {
 #' Selects the specified device as primary computation device. All further invocations to nmfgpu will use the specified
 #' CUDA device. 
 #' 
-#' @param device.index Index of the CUDA device, which should be used for computation.
+#' @param deviceIndex Index of the CUDA device, which should be used for computation.
 #' 
 #' @note CUDA enumerates devices starting with 0 for the first device. 
 #'  
 #' @export
-chooseDevice <- function(deviceInfo) {
+chooseDevice <- function(deviceIndex) {
   .ensureInitialized()
   
-  if(!is.numeric(deviceInfo) || deviceInfo %% 1 != 0 || deviceInfo < 0) {
+  if(!is.numeric(deviceIndex) || deviceIndex %% 1 != 0 || deviceIndex < 0) {
     stop("device.index must be a non-negative integer number")
   }
   
-  if(!cppChooseGpu(deviceInfo)) {
+  if(!cppChooseGpu(deviceIndex)) {
     stop("Failed to choose specified device!")
   }
 }

@@ -36,18 +36,6 @@ transpose.generic <- function(matrix) {
   return(ret)
 }
 
-rowval.generic <- function(matrix, index) {
-  if(is.matrix.SparseM(matrix)) {
-    ret <- as.vector(SparseM::as.matrix(matrix[index,]))
-  } else if(is.matrix.Matrix(matrix)) {
-    ret <- Matrix::as.vector(matrix[index,])
-  } else {
-    ret <- matrix[index,]
-  }
-  
-  return(ret)
-}
-
 colSums.generic <- function(matrix) {
   if(is.matrix.SparseM(matrix)) {
     if(matrix@class %in% c("matrix.csr", "matrix.coo")) {

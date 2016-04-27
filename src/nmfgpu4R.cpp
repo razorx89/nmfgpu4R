@@ -451,9 +451,7 @@ SEXP adapterComputeSinglePrecisionSparse(const std::string& algorithm, const std
   
   nmfgpu::NmfDescription<float> context;
   
-  if(ssnmf) {
-    context.useConstantBasisVectors = true;
-  }
+  context.useConstantBasisVectors = ssnmf;
   
   SEXP result = R_NilValue;
   
@@ -475,9 +473,7 @@ SEXP adapterComputeDoublePrecisionSparse(const std::string& algorithm, const std
   
   nmfgpu::NmfDescription<double> context;
   
-  if(ssnmf) {
-    context.useConstantBasisVectors = true;
-  }
+  context.useConstantBasisVectors = ssnmf;
   
   SEXP result = R_NilValue;
   std::unique_ptr<Rcpp::NumericVector> values;

@@ -7,7 +7,7 @@
 deviceMemoryInfo(deviceIndex = NA)
 }
 \arguments{
-\item{device.index}{If specified the memory info retrieval is restricted to the passed device indices. By default no restriction is active and
+\item{deviceIndex}{If specified the memory info retrieval is restricted to the passed device indices. By default no restriction is active and
 therefore memory information about all available CUDA devices are retrieved.}
 }
 \value{
