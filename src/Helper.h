@@ -25,6 +25,9 @@ along with nmfgpu4R.  If not, see <http://www.gnu.org/licenses/>.
 #include "nmfgpu.h"
 #include <Rcpp.h>
 
+#ifdef __cpp_lib_make_unique
+using std::make_unique;
+#else
 namespace Details {
   /** Implementation of a C++14 make_unique function, as it is not proposed by the C++11 standard.
   @tparam T Type of the object to be constructed.
@@ -36,6 +39,10 @@ namespace Details {
   std::unique_ptr<T> make_unique(Args&&... args) {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
   }
+}
+#endif
+
+namespace Details {
   
   void fillDenseMatrixDescriptionFromRObject(nmfgpu::MatrixDescription<float>& desc, std::unique_ptr<std::vector<float>>& values, Rcpp::RObject input);
   
