@@ -1,6 +1,6 @@
 # nmfgpu4R - R binding for the nmfgpu library
 # 
-# Copyright (C) 2015-2016  Sven Koitka (svenkoitka@fh-dortmund.de)
+# Copyright (C) 2015-2016  Sven Koitka (sven.koitka@fh-dortmund.de)
 # 
 # This file is part of nmfgpu4R.
 # 
