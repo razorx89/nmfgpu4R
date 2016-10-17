@@ -25,7 +25,7 @@ along with nmfgpu4R.  If not, see <http://www.gnu.org/licenses/>.
 #include "nmfgpu.h"
 #include <Rcpp.h>
 
-#ifdef __cpp_lib_make_unique
+#if __cplusplus >= 201402L 
 using std::make_unique;
 #else
 namespace Details {
