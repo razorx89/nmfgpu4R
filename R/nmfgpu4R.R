@@ -113,7 +113,7 @@ nmfgpu4R.init <- function(quiet=F) {
   if(nmfgpuRoot == "") {
     nmfgpuRoot <- .downloadLibrary(cudaMajor, cudaMinor, quiet)
     if(is.null(nmfgpuRoot)) {
-      return
+      return()
     }
     customBuild <- F
   }

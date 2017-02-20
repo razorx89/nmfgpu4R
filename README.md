@@ -7,7 +7,19 @@ If you want to use a custom compiled version, then define the `NMFGPU_ROOT` envi
 or read the package documentation for further information.
 
 ## Citation
-TBA
+```
+@Article{koitka-friedrich:2016,
+  author       = {Sven Koitka and Christoph M. Friedrich}, 
+  title        = {{nmfgpu4R}: {GPU}-Accelerated Computation of the Non-Negative Matrix Factorization ({NMF}) Using {CUDA} Capable Hardware}, 
+  journal      = {The R Journal},
+  year         = 2016,
+  volume       = 8,
+  number       = 2,
+  pages        = {382--392},
+  month        = december,
+  url          = {http://journal.r-project.org/archive/2016-2/koitka-friedrich.pdf}
+}
+```
 
 ## Licence
 This library is distributed under the terms of the *General Public Licence Version 3 (GPLv3)*.
